@@ -1,0 +1,63 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="robots" content="noindex"><title>Deezah’s Luxe Admin</title>
+<style>:root{--pink:#eb98a9;--rose:#b04b66;--bl:#fde9ee;--ln:#f3dce2;--ink:#3b2a31;--bg:#fff;--pe:#fafafa;color-scheme:light}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#171014;--pe:#1e1519;--ink:#f5e8ec;--bl:#2b1d23;--ln:#3a2830;--rose:#f2a9ba;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#171014;--pe:#1e1519;--ink:#f5e8ec;--bl:#2b1d23;--ln:#3a2830;--rose:#f2a9ba;color-scheme:dark}
+:root{box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}*{box-sizing:inherit}
+body{margin:0;background:var(--pe);color:var(--ink);font:15px/1.5 system-ui,sans-serif}
+header{position:sticky;top:env(safe-area-inset-top,0px);background:var(--bg);border-bottom:1px solid var(--ln);padding:12px 16px;display:flex;justify-content:space-between;align-items:center;z-index:5}
+h1{font:600 22px Georgia,serif;letter-spacing:.08em;margin:0}main{max-width:720px;margin:0 auto;padding:14px}
+nav{display:flex;gap:8px;margin-bottom:14px}nav button{flex:1}
+.card{background:var(--bg);border:1px solid var(--ln);border-radius:16px;padding:14px;margin-bottom:12px}
+input,select,textarea{width:100%;font:inherit;color:var(--ink);background:var(--pe);border:1px solid var(--ln);border-radius:10px;padding:11px;margin:4px 0 10px;min-height:44px}
+label{font-size:12px;letter-spacing:.1em;text-transform:uppercase;opacity:.7}
+button{font:inherit;min-height:44px;padding:0 16px;border-radius:99px;border:1px solid var(--pink);background:var(--bg);color:var(--rose);cursor:pointer}
+button.b,nav button.on{background:var(--rose);color:#fff;border-color:var(--rose)}small{opacity:.7}img.t{width:56px;height:56px;object-fit:cover;border-radius:10px;float:left;margin-right:10px}
+.tt{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:var(--ink);color:var(--bg);padding:10px 20px;border-radius:99px;display:none}</style></head><body>
+<header><h1>Deezah’s Luxe</h1><span id="hb"></span></header><main id="app"></main><div class="tt" id="tt"></div>
+<script src="/config.js"></script><script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.js"></script>
+<script>
+const sb=supabase.createClient(DL.url,DL.key),$=s=>document.querySelector(s),N=n=>"₦"+Number(n||0).toLocaleString("en-NG"),
+esc=s=>String(s??"").replace(/[&<>"']/g,c=>"&#"+c.charCodeAt(0)+";"),wa=p=>String(p).replace(/\D/g,"").replace(/^0/,"234"),
+ST=["awaiting","reported","paid","packed","delivered","cancelled","expired","refunded"];
+let tab="orders",edit=null,S={},ch;
+const toast=m=>{const t=$("#tt");t.textContent=m;t.style.display="block";setTimeout(()=>t.style.display="none",2500)};
+(async()=>{const{data:{session}}=await sb.auth.getSession();session?app():login()})();
+function login(){$("#app").innerHTML=`<div class="card"><label>Email</label><input id="em" type="email" autocomplete="username"><label>Password</label><input id="pw" type="password" autocomplete="current-password"><button class="b" id="lg">Log in</button><p id="er"></p></div>`;
+$("#lg").onclick=async()=>{const{error}=await sb.auth.signInWithPassword({email:$("#em").value.trim(),password:$("#pw").value});error?$("#er").textContent="Wrong email or password":app()}}
+function app(){$("#hb").innerHTML=`<button id="al">Enable alerts</button> <button id="lo">Log out</button>`;
+$("#lo").onclick=async()=>{await sb.auth.signOut();location.reload()};$("#al").onclick=async()=>toast(await Notification.requestPermission()==="granted"?"Alerts on while this page is open":"Alerts blocked");
+$("#app").innerHTML=`<nav>${["orders","products","settings"].map(t=>`<button data-t="${t}">${t[0].toUpperCase()+t.slice(1)}</button>`).join("")}</nav><div id="c"></div>`;
+$("nav").onclick=e=>{const t=e.target.dataset.t;if(t)show(t)};show(tab);
+ch=sb.channel("o").on("postgres_changes",{event:"INSERT",schema:"public",table:"orders"},p=>{toast("New order "+p.new.no+" · "+N(p.new.total));if(window.Notification&&Notification.permission==="granted")new Notification("Deezah’s Luxe",{body:"New order "+p.new.no+" · "+N(p.new.total)});if(tab==="orders")orders()}).subscribe()}
+function show(t){tab=t;document.querySelectorAll("nav button").forEach(b=>b.classList.toggle("on",b.dataset.t===t));({orders,products,settings})[t]()}
+async function orders(){const{data}=await sb.from("orders").select("*").order("id",{ascending:false}).limit(100);
+$("#c").innerHTML=(data||[]).map(o=>`<div class="card"><b>${o.no}</b> · ${N(o.total)} <small>${new Date(o.created_at).toLocaleString("en-NG")}</small><br>${esc(o.name)} · <a href="tel:${esc(o.phone)}">${esc(o.phone)}</a> · <a target="_blank" rel="noopener" href="https://wa.me/${wa(o.phone)}">WhatsApp</a><br>${o.mode==="pickup"?"Pickup":esc(o.address+", "+o.city+", "+o.state)}<br>${(o.items||[]).map(i=>i.q+"× "+esc(i.name)+(i.size?" ("+esc(i.size)+")":"")).join(", ")} <small>(delivery ${N(o.fee)})</small>${o.note?"<br><i>"+esc(o.note)+"</i>":""}<br><select data-id="${o.id}">${ST.map(s=>`<option${s===o.status?" selected":""}>${s}</option>`).join("")}</select></div>`).join("")||"<p>No orders yet.</p>";
+$("#c").onchange=async e=>{const s=e.target;if(!s.dataset.id)return;if(s.value==="paid"&&!confirm("Have you seen this credit in your bank app?"))return orders();
+const{error}=await sb.from("orders").update({status:s.value}).eq("id",s.dataset.id);toast(error?"Could not update":"Updated")}}
+async function comp(f){const b=await createImageBitmap(f,{imageOrientation:"from-image"}),r=Math.min(1,1600/Math.max(b.width,b.height)),c=document.createElement("canvas");c.width=b.width*r;c.height=b.height*r;c.getContext("2d").drawImage(b,0,0,c.width,c.height);return new Promise(ok=>c.toBlob(ok,"image/webp",.85))}
+async function products(){const{data}=await sb.from("products").select("*").order("id",{ascending:false});const e=edit||{};
+$("#c").innerHTML=`<div class="card"><b>${e.id?"Edit product":"Add product"}</b><label>Name</label><input id="n" value="${esc(e.name)}"><label>Category</label><input id="ca" value="${esc(e.category)}" placeholder="Dresses, Bags, Shoes…"><label>Description</label><textarea id="d">${esc(e.description)}</textarea>
+<label>Price (₦)</label><input id="p" type="number" inputmode="numeric" value="${e.price??""}"><label>Sale price (₦, optional)</label><input id="sp" type="number" inputmode="numeric" value="${e.sale_price||""}"><label>Stock (empty = unlimited)</label><input id="st" type="number" inputmode="numeric" value="${e.stock??""}">
+<label>Sizes (comma separated, optional)</label><input id="sz" value="${esc((e.sizes||[]).join(", "))}"><label>Photo</label><input id="im" type="file" accept="image/*"><label><input id="pb" type="checkbox" style="width:auto;min-height:0"${e.published===false?"":" checked"}> Published (visible in the shop)</label>
+<button class="b" id="sv">${e.id?"Save changes":"Add product"}</button> ${e.id?`<button id="cx">Cancel</button>`:""}</div>`+(data||[]).map(p=>`<div class="card">${p.image_url?`<img class="t" src="${esc(p.image_url)}" alt="">`:""}<b>${esc(p.name)}</b> ${p.published?"":"<small>(hidden)</small>"}<br>${p.sale_price?`<s>${N(p.price)}</s> ${N(p.sale_price)}`:N(p.price)} · stock ${p.stock??"∞"}<br style="clear:both"><button data-e="${p.id}">Edit</button> <button data-h="${p.id}">${p.published?"Hide":"Publish"}</button> <button data-x="${p.id}">Delete</button></div>`).join("");
+const rows=data||[];$("#c").onclick=async ev=>{const t=ev.target;if(t.id==="cx"){edit=null;return products()}
+if(t.dataset.e){edit=rows.find(r=>r.id==t.dataset.e);products();scrollTo(0,0)}
+if(t.dataset.h){const r=rows.find(x=>x.id==t.dataset.h);await sb.from("products").update({published:!r.published}).eq("id",r.id);products()}
+if(t.dataset.x&&confirm("Delete this product? (Past orders keep their details.)")){await sb.from("products").delete().eq("id",t.dataset.x);products()}
+if(t.id==="sv"){t.disabled=true;let url=e.image_url||null;const f=$("#im").files[0];
+try{if(f){const b=await comp(f),path="p/"+Date.now()+".webp";const u=await sb.storage.from("products").upload(path,b,{contentType:"image/webp"});if(u.error)throw u.error;url=sb.storage.from("products").getPublicUrl(path).data.publicUrl}
+const v=id=>$(id).value.trim(),num=id=>v(id)===""?null:+v(id);if(!v("#n")||num("#p")===null)throw Error("Name and price are required");
+const row={name:v("#n"),category:v("#ca"),description:v("#d"),price:num("#p"),sale_price:num("#sp"),stock:num("#st"),sizes:v("#sz")?v("#sz").split(",").map(s=>s.trim()).filter(Boolean):null,image_url:url,published:$("#pb").checked};
+const r=e.id?await sb.from("products").update(row).eq("id",e.id):await sb.from("products").insert(row);if(r.error)throw r.error;edit=null;toast("Saved");products()}catch(x){toast(x.message||"Could not save");t.disabled=false}}}}
+async function settings(){const{data:s}=await sb.from("settings").select("*").eq("id",1).single();S=s||{};const z=(S.zones||[]).map(z=>z.s.join(", ")+" = "+z.fee).join("\n"),k=S.socials||{};
+$("#c").innerHTML=`<div class="card"><b>Payment details</b><br><small>Customers send money to this account. Double-check it.</small><label>Bank name</label><input id="bn" value="${esc(S.bank_name)}"><label>Account number</label><input id="an" inputmode="numeric" maxlength="10" value="${esc(S.acct_no)}"><label>Account name</label><input id="ac" value="${esc(S.acct_name)}"></div>
+<div class="card"><b>Delivery</b><label>Pickup address (leave empty to switch off)</label><input id="pk" value="${esc(S.pickup)}"><label>Zones: states = fee (one zone per line)</label><textarea id="zn" rows="4">${esc(z)}</textarea><label>Fee for all other states (₦)</label><input id="of" type="number" value="${S.other_fee??5500}"><label>Free delivery above (₦)</label><input id="fo" type="number" value="${S.free_over??50000}"></div>
+<div class="card"><b>Contact and social</b><label>WhatsApp number</label><input id="wa" value="${esc(S.whatsapp)}"><label>Instagram link</label><input id="ig" value="${esc(k.Instagram)}"><label>TikTok link</label><input id="tk" value="${esc(k.TikTok)}"></div>
+<div class="card"><label><input id="lv" type="checkbox" style="width:auto;min-height:0"${S.live===false?"":" checked"}> Shop is open for orders</label></div><button class="b" id="ss" style="width:100%">Save settings</button>`;
+$("#ss").onclick=async()=>{const v=id=>$(id).value.trim(),zones=v("#zn").split("\n").map(l=>l.split("=")).filter(a=>a.length===2&&+a[1]>=0).map(a=>({s:a[0].split(",").map(x=>x.trim()).filter(Boolean),fee:+a[1]}));
+const bank=[v("#bn"),v("#an"),v("#ac")].join("|"),old=[S.bank_name,S.acct_no,S.acct_name].map(x=>x||"").join("|");
+if(bank!==old&&old!=="||"){const pw=prompt("You changed the payment details. Re-enter your password to confirm:");if(!pw)return;const{data:{user}}=await sb.auth.getUser();const r=await sb.auth.signInWithPassword({email:user.email,password:pw});if(r.error)return toast("Wrong password, nothing saved")}
+if(v("#an")&&!/^\d{10}$/.test(v("#an")))return toast("Account number must be 10 digits");
+const soc={};if(v("#ig"))soc.Instagram=v("#ig");if(v("#tk"))soc.TikTok=v("#tk");
+const{error}=await sb.from("settings").update({bank_name:v("#bn"),acct_no:v("#an"),acct_name:v("#ac"),pickup:v("#pk"),zones,other_fee:+v("#of")||0,free_over:+v("#fo")||0,whatsapp:v("#wa"),socials:soc,live:$("#lv").checked}).eq("id",1);toast(error?"Could not save":"Settings saved")}}
+</script></body></html>
