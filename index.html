@@ -286,3 +286,8 @@ const s=b.data;if(s){CFG.bank={name:s.bank_name,no:s.acct_no,acct:s.acct_name};C
 $("#soc").innerHTML=Object.entries(CFG.socials).filter(([,u])=>u).map(([n,u])=>`<a href="${u}" target="_blank" rel="noopener noreferrer" style="margin:0 10px;font-size:13px">${n}</a>`).join("")}
 $("#grid").innerHTML='<div class="empty">Loading…</div>';load().catch(()=>{}).finally(()=>{chips();grid();cnt()});
 </script></body></html>
+<script>
+const _prod=prod;
+prod=function(id){_prod(id);const p=P.find(x=>x.id===id),ph=document.querySelector("#shP .ph");
+if(p&&p.img&&ph){ph.style.aspectRatio="1/1";ph.innerHTML='<img src="'+p.img+'" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover">'}};
+</script>
