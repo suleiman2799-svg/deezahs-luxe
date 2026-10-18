@@ -251,8 +251,8 @@ function prod(id){const p=P.find(x=>x.id===id);selSz=null;const out=p.st===0;
 $("#shP").innerHTML=`<div class="sh-h"><h2>${p.n}</h2><button class="x" data-x aria-label="Close">×</button></div><div class="ph" style="${bg(p)};aspect-ratio:16/10;border-radius:18px;font-size:44px">✦</div>
 <div class="pr" style="margin:14px 0 4px;font-size:20px">${p.s?`<s>${N(p.p)}</s>`:""}<b>${N(pr(p))}</b>${p.s?`<span class="sv">You save ${N(p.p-p.s)}</span>`:""}</div><p style="color:var(--mute);margin:6px 0 14px">${p.d}</p>
 ${p.z?`<label>Size</label><div class="sizes">${p.z.map(s=>`<button class="sz" data-s="${s}">${s}</button>`).join("")}</div>`:""}
-${p.st>0&&p.st<=3?`<p class="sv">Only ${p.st} left</p>`:""}<button class="btn" style="width:100%" id="add" ${out?"disabled":""}>${out?"Sold out":"Add to cart"}</button>`;open("#ovP");
-$("#shP").onclick=e=>{if(e.target.closest("[data-x]"))return close("#ovP");const s=e.target.closest("[data-s]");if(s){selSz=s.dataset.s;$("#shP").querySelectorAll(".sz").forEach(z=>z.classList.toggle("on",z===s))}
+${p.st>0&&p.st<=3?`<p class="sv">Only ${p.st} left</p>`:""}<button class="btn" style="width:100%" id="add" ${out?"disabled":""}>${out?"Sold out":"Add to cart"}</button><button class="btn ghost" style="width:100%;margin-top:10px" id="shr" type="button">Share this piece</button>`;open("#ovP");
+$("#shP").onclick=e=>{if(e.target.closest("[data-x]"))return close("#ovP");if(e.target.closest("#shr")){const u=location.origin+location.pathname+"?p="+id,d={title:p.n,text:p.n+" · "+N(pr(p)),url:u};if(navigator.share)navigator.share(d).catch(()=>{});else(navigator.clipboard?navigator.clipboard.writeText(u):Promise.reject()).then(()=>toast("Link copied")).catch(()=>toast(u));return}const s=e.target.closest("[data-s]");if(s){selSz=s.dataset.s;$("#shP").querySelectorAll(".sz").forEach(z=>z.classList.toggle("on",z===s))}
 if(e.target.closest("#add")){if(p.z&&!selSz)return toast("Please choose a size");const k=id+"|"+(selSz||""),l=cart.find(x=>x.k===k),mx=p.st??99;
 if(l){if(l.q>=mx)return toast("That’s all we have in stock");l.q++}else cart.push({k,id,z:selSz,q:1});sv("dl_cart",cart);cnt();close("#ovP");toast("Added to your cart")}}}
 /* cart */
@@ -317,7 +317,7 @@ async function load(){const[a,b]=await Promise.all([sb.from("products").select("
 P=(a.data||[]).map(r=>({id:r.id,n:r.name,c:r.category||"Other",p:r.price,s:r.sale_price||0,d:r.description||"",z:r.sizes&&r.sizes.length?r.sizes:null,st:r.stock??undefined,img:r.image_url}));
 const s=b.data;if(s){CFG.bank={name:s.bank_name,no:s.acct_no,acct:s.acct_name};CFG.pickup=s.pickup||"Please contact us for the pickup address";CFG.free=s.free_over;CFG.zones=s.zones||[];CFG.other=s.other_fee;CFG.socials=s.socials||{};if(s.whatsapp)CFG.socials={WhatsApp:"https://wa.me/"+String(s.whatsapp).replace(/\D/g,"").replace(/^0/,"234"),...CFG.socials}}
 $("#soc").innerHTML=Object.entries(CFG.socials).filter(([,u])=>u).map(([n,u])=>`<a href="${u}" target="_blank" rel="noopener noreferrer" style="margin:0 10px;font-size:13px">${n}</a>`).join("")}
-$("#grid").innerHTML='<div class="empty">Loading…</div>';load().catch(()=>{}).finally(()=>{chips();grid();cnt()});
+$("#grid").innerHTML='<div class="empty">Loading…</div>';load().catch(()=>{}).finally(()=>{chips();grid();cnt();const q=+new URLSearchParams(location.search).get("p");if(q&&P.find(x=>x.id===q))setTimeout(()=>prod(q),document.getElementById("pl")?3500:0)});
 </script></body></html>
 <script>
 const _prod=prod;
