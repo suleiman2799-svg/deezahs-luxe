@@ -1,45 +1,126 @@
 <!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="robots" content="noindex"><title>Deezah’s Luxe Admin</title>
-<style>:root{--pink:#eb98a9;--rose:#b04b66;--bl:#fde9ee;--ln:#f3dce2;--ink:#3b2a31;--bg:#fff;--pe:#fafafa;color-scheme:light}
-@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#171014;--pe:#1e1519;--ink:#f5e8ec;--bl:#2b1d23;--ln:#3a2830;--rose:#f2a9ba;color-scheme:dark}}
-:root[data-theme="dark"]{--bg:#171014;--pe:#1e1519;--ink:#f5e8ec;--bl:#2b1d23;--ln:#3a2830;--rose:#f2a9ba;color-scheme:dark}
-:root{box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}*{box-sizing:inherit}
-body{margin:0;background:var(--pe);color:var(--ink);font:15px/1.5 system-ui,sans-serif}
-header{position:sticky;top:env(safe-area-inset-top,0px);background:var(--bg);border-bottom:1px solid var(--ln);padding:12px 16px;display:flex;justify-content:space-between;align-items:center;z-index:5}
-h1{font:600 22px Georgia,serif;letter-spacing:.08em;margin:0}main{max-width:720px;margin:0 auto;padding:14px}
-nav{display:flex;gap:8px;margin-bottom:14px}nav button{flex:1}
-.card{background:var(--bg);border:1px solid var(--ln);border-radius:16px;padding:14px;margin-bottom:12px}
-input,select,textarea{width:100%;font:inherit;color:var(--ink);background:var(--pe);border:1px solid var(--ln);border-radius:10px;padding:11px;margin:4px 0 10px;min-height:44px}
-label{font-size:12px;letter-spacing:.1em;text-transform:uppercase;opacity:.7}
-button{font:inherit;min-height:44px;padding:0 16px;border-radius:99px;border:1px solid var(--pink);background:var(--bg);color:var(--rose);cursor:pointer}
-button.b,nav button.on{background:var(--rose);color:#fff;border-color:var(--rose)}small{opacity:.7}img.t{width:56px;height:56px;object-fit:cover;border-radius:10px;float:left;margin-right:10px}
-.tt{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:var(--ink);color:var(--bg);padding:10px 20px;border-radius:99px;display:none}</style></head><body>
-<header><h1>Deezah’s Luxe</h1><span id="hb"></span></header><main id="app"></main><div class="tt" id="tt"></div>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600&family=Jost:wght@400;500&display=swap">
+<style>
+:root{--bg:#140d11;--card:#1f1419;--ln:#34232b;--ink:#f7ecef;--mute:#b79ca6;--pink:#eb98a9;--rose:#f2a9ba;--acc:#b04b66;--sh:0 14px 34px rgba(0,0,0,.35);color-scheme:dark}
+@media(prefers-color-scheme:light){:root{--bg:#fdf6f8;--card:#fff;--ln:#f3dce2;--ink:#3b2a31;--mute:#8a747c;--rose:#b04b66;--sh:0 12px 30px rgba(235,152,169,.22);color-scheme:light}}
+:root{box-sizing:border-box}*,*::before,*::after{box-sizing:inherit}
+body{margin:0;background:var(--bg);color:var(--ink);font:400 15px/1.55 Jost,system-ui,sans-serif;padding-top:env(safe-area-inset-top,0px);-webkit-tap-highlight-color:transparent}
+h1,h2,h3{font-family:"Cormorant Garamond",Georgia,serif;font-weight:600;margin:0;letter-spacing:.03em}
+header{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;display:flex;justify-content:space-between;align-items:center;padding:12px 16px;background:color-mix(in srgb,var(--bg) 82%,transparent);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid var(--ln)}
+header h1{font-size:24px}header span{display:flex;gap:8px}
+main{max-width:760px;margin:0 auto;padding:16px 16px calc(100px + env(safe-area-inset-bottom,0px))}
+button{font:inherit;min-height:44px;padding:0 18px;border-radius:99px;border:1px solid var(--pink);background:transparent;color:var(--rose);cursor:pointer;transition:transform .2s,background .2s}
+button:active{transform:scale(.97)}button.b{background:var(--acc);border-color:var(--acc);color:#fff}button.sm{min-height:36px;padding:0 14px;font-size:13px}button[disabled]{opacity:.5}
+input,select,textarea{width:100%;font:inherit;color:var(--ink);background:var(--bg);border:1px solid var(--ln);border-radius:12px;padding:11px 13px;margin:4px 0 12px;min-height:46px;outline:none}
+input:focus,select:focus,textarea:focus{border-color:var(--pink);box-shadow:0 0 0 3px rgba(235,152,169,.22)}
+label{display:block;font-size:13px;color:var(--mute)}
+.card{background:var(--card);border:1px solid var(--ln);border-radius:20px;padding:16px;margin-bottom:14px;box-shadow:var(--sh)}
+.card>b:first-child{font:600 20px "Cormorant Garamond",serif;display:block;margin-bottom:4px}
+small,.mu{color:var(--mute)}
+/* splash */
+#pl{position:fixed;inset:0;z-index:100;display:grid;place-items:center;background:radial-gradient(circle at 50% 42%,#2b1d23,#140d11);clip-path:circle(150% at 50% 45%);overflow:hidden}
+@media(prefers-color-scheme:light){#pl{background:radial-gradient(circle at 50% 42%,#fff,#fdeff3 55%,#f9d9e2)}}
+#pl.out{clip-path:circle(0% at 50% 45%);transition:clip-path .95s cubic-bezier(.75,0,.2,1)}
+#pl svg{width:min(78vw,400px);height:auto;overflow:visible}
+#pl path{fill:transparent;stroke:var(--pink);stroke-width:.9;stroke-dasharray:1 1;stroke-dashoffset:1}
+#pl.go path{stroke-dashoffset:0;fill:var(--pink);transition:stroke-dashoffset 1.5s ease-in-out,fill .9s ease 1.3s,stroke-width .6s ease 1.9s}
+#pl.go #branch path{transition-delay:.35s,1.6s,2.1s}#pl.go #wordmark path{transition-delay:.8s,1.9s,2.3s}
+#pl.go svg{animation:glow 1.8s ease 2s}@keyframes glow{50%{filter:drop-shadow(0 0 14px rgba(235,152,169,.85))}}
+#pl .fb{font-size:34px;color:var(--rose);opacity:0;transition:opacity 1.2s}#pl.go .fb{opacity:1}
+#pl small{position:absolute;bottom:calc(24px + env(safe-area-inset-bottom,0px));letter-spacing:.2em}
+/* welcome / login */
+.wel{min-height:70vh;display:grid;align-content:center;text-align:center;gap:6px}
+.wel h2{font-size:clamp(38px,11vw,56px);line-height:1.05}.wel p{color:var(--mute);margin:0 0 18px}
+.wel .card{text-align:left;max-width:380px;margin:0 auto;width:100%}
+#er{color:#e0707f;min-height:20px;margin:8px 0 0}
+/* home */
+.hi{margin:6px 0 16px}.hi h2{font-size:34px}.hi p{margin:2px 0 0;color:var(--mute)}
+.hero{padding:20px;border-radius:24px;background:linear-gradient(150deg,var(--acc),#6e2a3f);color:#fff;margin-bottom:14px;box-shadow:var(--sh)}
+.hero small{color:rgba(255,255,255,.78)}.hero .big{font:600 clamp(40px,12vw,58px)/1.05 "Cormorant Garamond",serif;margin:4px 0}
+.st{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:14px}.st .card{margin:0;padding:14px}.st .v{font:600 28px "Cormorant Garamond",serif;color:var(--rose)}
+.row{display:flex;justify-content:space-between;gap:10px;align-items:center;padding:10px 0;border-top:1px solid var(--ln)}.row:first-of-type{border-top:0}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+/* orders */
+.chips{display:flex;gap:8px;overflow-x:auto;padding:2px 0 12px;scrollbar-width:none}.chips::-webkit-scrollbar{display:none}
+.chip{flex:none;min-height:38px;padding:0 15px;font-size:13px;color:var(--mute);border-color:var(--ln)}.chip.on{background:var(--acc);border-color:var(--acc);color:#fff}
+.pill{display:inline-block;font-size:12px;padding:2px 10px;border-radius:99px;border:1px solid currentColor;margin-left:6px;vertical-align:middle}
+.s-awaiting{color:#d9a441}.s-reported{color:#5aa9e6}.s-paid,.s-delivered{color:#4fbf8b}.s-packed{color:#9b8cf0}.s-cancelled,.s-expired,.s-refunded{color:#e0707f}
+.oc a{color:var(--rose)}.oc .top{display:flex;justify-content:space-between;align-items:baseline;gap:8px}.oc .top b{font:600 22px "Cormorant Garamond",serif}
+.oc .items{padding:8px 0;margin:8px 0;border-block:1px dashed var(--ln)}
+/* products */
+.pc{display:flex;gap:12px}.pc img,.pc .ph{width:72px;height:72px;border-radius:14px;object-fit:cover;flex:none;background:var(--ln)}.pc .bt{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
+/* tabs */
+#nv{position:fixed;left:12px;right:12px;bottom:calc(12px + env(safe-area-inset-bottom,0px));z-index:30;max-width:520px;margin:0 auto;display:flex;padding:6px;border-radius:99px;background:color-mix(in srgb,var(--card) 90%,transparent);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border:1px solid var(--ln);box-shadow:var(--sh)}
+#nv button{flex:1;border:0;min-height:50px;padding:0 4px;font-size:12px;color:var(--mute);display:grid;gap:0;align-content:center;line-height:1.1}#nv button i{font-style:normal;font-size:19px}
+#nv button.on{background:var(--acc);color:#fff}
+.tt{position:fixed;left:50%;bottom:calc(92px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:var(--ink);color:var(--bg);padding:10px 20px;border-radius:99px;display:none;z-index:50;max-width:90vw}
+.hide{display:none!important}
+@media(prefers-reduced-motion:reduce){*{animation-duration:.01ms!important;transition-duration:.01ms!important}}
+</style></head><body>
+<div id="pl"><small class="mu">Tap to skip</small></div>
+<header class="hide" id="hd"><h1>Deezah’s Luxe</h1><span><button class="sm" id="al">Alerts</button><button class="sm" id="lo">Log out</button></span></header>
+<main id="c"></main>
+<nav id="nv" class="hide"><button data-t="home"><i>⌂</i>Home</button><button data-t="orders"><i>☰</i>Orders</button><button data-t="products"><i>✦</i>Products</button><button data-t="settings"><i>⚙</i>Settings</button></nav>
+<div class="tt" id="tt" role="status"></div>
 <script src="/config.js"></script><script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.8.2/jspdf.plugin.autotable.min.js"></script>
 <script>
 const sb=supabase.createClient(DL.url,DL.key),$=s=>document.querySelector(s),N=n=>"₦"+Number(n||0).toLocaleString("en-NG"),
 esc=s=>String(s??"").replace(/[&<>"']/g,c=>"&#"+c.charCodeAt(0)+";"),wa=p=>String(p).replace(/\D/g,"").replace(/^0/,"234"),
-ST=["awaiting","reported","paid","packed","delivered","cancelled","expired","refunded"];
-let tab="orders",edit=null,S={},ch;
-const toast=m=>{const t=$("#tt");t.textContent=m;t.style.display="block";setTimeout(()=>t.style.display="none",2500)};
-(async()=>{const{data:{session}}=await sb.auth.getSession();session?app():login()})();
-function login(){$("#app").innerHTML=`<div class="card"><label>Email</label><input id="em" type="email" autocomplete="username"><label>Password</label><input id="pw" type="password" autocomplete="current-password"><button class="b" id="lg">Log in</button><p id="er"></p></div>`;
-$("#lg").onclick=async()=>{const{error}=await sb.auth.signInWithPassword({email:$("#em").value.trim(),password:$("#pw").value});error?$("#er").textContent="Wrong email or password":app()}}
-function app(){$("#hb").innerHTML=`<button id="al">Enable alerts</button> <button id="lo">Log out</button>`;
+ST=["awaiting","reported","paid","packed","delivered","cancelled","expired","refunded"],REV=["paid","packed","delivered"],
+day=d=>new Date(d).toLocaleDateString("en-CA"),fdt=d=>new Date(d).toLocaleString("en-NG",{dateStyle:"medium",timeStyle:"short"});
+let tab="home",edit=null,S={},ch,flt="all";
+const toast=m=>{const t=$("#tt");t.textContent=m;t.style.display="block";clearTimeout(t._t);t._t=setTimeout(()=>t.style.display="none",2500)};
+/* welcome intro (reuses the shop's logo animation) */
+async function splash(){const pl=$("#pl");try{if(sessionStorage.getItem("dla")){pl.remove();return}}catch(e){}
+try{const t=await(await fetch("/")).text(),s=new DOMParser().parseFromString(t,"text/html").querySelector("#pl svg");if(!s)throw 0;pl.insertAdjacentHTML("afterbegin",s.outerHTML);pl.querySelectorAll("path").forEach(p=>p.setAttribute("pathLength","1"))}catch(e){pl.insertAdjacentHTML("afterbegin",'<h1 class="fb">Deezah’s Luxe</h1>')}
+requestAnimationFrame(()=>requestAnimationFrame(()=>pl.classList.add("go")));
+await new Promise(r=>{const t=setTimeout(r,3300);pl.onclick=()=>{clearTimeout(t);r()}});try{sessionStorage.setItem("dla","1")}catch(e){}
+pl.classList.add("out");setTimeout(()=>pl.remove(),1000)}
+(async()=>{const r=sb.auth.getSession();await splash();const{data:{session}}=await r;session?app():login()})();
+function login(){$("#c").innerHTML=`<div class="wel"><h2>Welcome back</h2><p>Sign in to manage your shop.</p><div class="card"><label>Email</label><input id="em" type="email" autocomplete="username"><label>Password</label><input id="pw" type="password" autocomplete="current-password"><button class="b" id="lg" style="width:100%">Log in</button><p id="er"></p></div></div>`;
+$("#lg").onclick=async()=>{const{error}=await sb.auth.signInWithPassword({email:$("#em").value.trim(),password:$("#pw").value});error?$("#er").textContent="Wrong email or password. Try again.":app()}}
+function app(){$("#hd").classList.remove("hide");$("#nv").classList.remove("hide");
 $("#lo").onclick=async()=>{await sb.auth.signOut();location.reload()};$("#al").onclick=async()=>toast(await Notification.requestPermission()==="granted"?"Alerts on while this page is open":"Alerts blocked");
-$("#app").innerHTML=`<nav>${["orders","products","settings"].map(t=>`<button data-t="${t}">${t[0].toUpperCase()+t.slice(1)}</button>`).join("")}</nav><div id="c"></div>`;
-$("nav").onclick=e=>{const t=e.target.dataset.t;if(t)show(t)};show(tab);
-ch=sb.channel("o").on("postgres_changes",{event:"INSERT",schema:"public",table:"orders"},p=>{toast("New order "+p.new.no+" · "+N(p.new.total));if(window.Notification&&Notification.permission==="granted")new Notification("Deezah’s Luxe",{body:"New order "+p.new.no+" · "+N(p.new.total)});if(tab==="orders")orders()}).subscribe()}
-function show(t){tab=t;document.querySelectorAll("nav button").forEach(b=>b.classList.toggle("on",b.dataset.t===t));({orders,products,settings})[t]()}
-async function orders(){const{data}=await sb.from("orders").select("*").order("id",{ascending:false}).limit(100);
-$("#c").innerHTML=(data||[]).map(o=>`<div class="card"><b>${o.no}</b> · ${N(o.total)} <small>${new Date(o.created_at).toLocaleString("en-NG")}</small><br>${esc(o.name)} · <a href="tel:${esc(o.phone)}">${esc(o.phone)}</a> · <a target="_blank" rel="noopener" href="https://wa.me/${wa(o.phone)}">WhatsApp</a><br>${o.mode==="pickup"?"Pickup":esc(o.address+", "+o.city+", "+o.state)}<br>${(o.items||[]).map(i=>i.q+"× "+esc(i.name)+(i.size?" ("+esc(i.size)+")":"")).join(", ")} <small>(delivery ${N(o.fee)})</small>${o.note?"<br><i>"+esc(o.note)+"</i>":""}<br><select data-id="${o.id}">${ST.map(s=>`<option${s===o.status?" selected":""}>${s}</option>`).join("")}</select></div>`).join("")||"<p>No orders yet.</p>";
+$("#nv").onclick=e=>{const t=e.target.closest("[data-t]");if(t){edit=null;show(t.dataset.t)}};show(tab);
+ch=sb.channel("o").on("postgres_changes",{event:"INSERT",schema:"public",table:"orders"},p=>{toast("New order "+p.new.no+" · "+N(p.new.total));if(window.Notification&&Notification.permission==="granted")new Notification("Deezah’s Luxe",{body:"New order "+p.new.no+" · "+N(p.new.total)});if(tab==="orders"||tab==="home")show(tab)}).subscribe()}
+function show(t){tab=t;document.querySelectorAll("#nv button").forEach(b=>b.classList.toggle("on",b.dataset.t===t));scrollTo(0,0);({home,orders,products,settings})[t]()}
+/* home */
+async function home(){const{data}=await sb.from("orders").select("no,name,total,fee,status,created_at").order("id",{ascending:false}).limit(1000),o=data||[],td=day(new Date()),
+sold=o.filter(x=>REV.includes(x.status)),sum=a=>a.reduce((s,x)=>s+x.total,0),today=sold.filter(x=>day(x.created_at)===td),
+wait=o.filter(x=>x.status==="awaiting"||x.status==="reported").length,h=new Date().getHours(),
+ms=new Date();ms.setDate(1);const{count}=await sb.from("products").select("id",{count:"exact",head:true});
+$("#c").innerHTML=`<div class="hi"><h2>Good ${h<12?"morning":h<18?"afternoon":"evening"}</h2><p>${new Date().toLocaleDateString("en-NG",{weekday:"long",day:"numeric",month:"long"})}</p></div>
+<div class="hero"><small>Sales today</small><div class="big">${N(sum(today))}</div><small>${today.length} paid order${today.length==1?"":"s"}</small></div>
+<div class="st"><div class="card"><small>Total revenue</small><div class="v">${N(sum(sold))}</div></div><div class="card"><small>Orders to check</small><div class="v">${wait}</div></div><div class="card"><small>All orders</small><div class="v">${o.length}</div></div><div class="card"><small>Products</small><div class="v">${count??0}</div></div></div>
+<div class="card"><b>Export sales history</b><small>Download a PDF of your orders and revenue.</small><div class="two" style="margin-top:10px"><div><label>From</label><input id="pf" type="date" value="${day(ms)}"></div><div><label>To</label><input id="pt" type="date" value="${td}"></div></div>
+<label>Include</label><select id="ps"><option value="s">Paid, packed and delivered orders</option><option value="a">All orders</option></select><button class="b" id="px" style="width:100%">Download PDF</button></div>
+<div class="card"><b>Recent orders</b>${o.slice(0,5).map(x=>`<div class="row"><span>${esc(x.no)} · ${esc(x.name)}<span class="pill s-${x.status}">${x.status}</span><br><small>${fdt(x.created_at)}</small></span><b>${N(x.total)}</b></div>`).join("")||"<p class='mu'>No orders yet. They’ll show up here the moment a customer checks out.</p>"}</div>`;
+$("#px").onclick=pdf}
+async function pdf(){const b=$("#px"),f=$("#pf").value,t=$("#pt").value;if(!f||!t||f>t)return toast("Pick a valid date range");b.disabled=true;b.textContent="Preparing…";
+try{let q=sb.from("orders").select("*").gte("created_at",new Date(f+"T00:00:00").toISOString()).lte("created_at",new Date(t+"T23:59:59").toISOString()).order("id",{ascending:true}).limit(2000);if($("#ps").value==="s")q=q.in("status",REV);
+const{data,error}=await q;if(error)throw error;const o=data||[];if(!o.length){toast("No orders in that range");return}
+const J=window.jspdf.jsPDF,d=new J(),P=n=>"NGN "+Number(n||0).toLocaleString("en-NG"),done=o.filter(x=>REV.includes(x.status)),rev=done.reduce((s,x)=>s+x.total,0),fee=done.reduce((s,x)=>s+(x.fee||0),0);
+d.setFillColor(176,75,102);d.rect(0,0,210,30,"F");d.setTextColor(255);d.setFontSize(20);d.text("Deezah's Luxe",14,14);d.setFontSize(10);d.text("Sales history: "+f+" to "+t,14,22);
+d.setTextColor(40);d.setFontSize(11);d.text("Orders: "+o.length+"   Completed: "+done.length+"   Revenue: "+P(rev)+"   Delivery fees: "+P(fee),14,40);
+d.autoTable({startY:46,head:[["Order","Date","Customer","Items","Status","Total"]],body:o.map(x=>[x.no,day(x.created_at),x.name+"\n"+x.phone,(x.items||[]).map(i=>i.q+"x "+i.name+(i.size?" ("+i.size+")":"")).join(", "),x.status,P(x.total)]),styles:{fontSize:8,cellPadding:2},headStyles:{fillColor:[176,75,102]},columnStyles:{3:{cellWidth:50},5:{halign:"right"}},alternateRowStyles:{fillColor:[253,240,244]}});
+const y=d.lastAutoTable.finalY+8;d.setFontSize(10);d.text("Revenue counts paid, packed and delivered orders only.",14,y);d.save("deezahs-luxe-sales-"+f+"-to-"+t+".pdf");toast("PDF downloaded")}
+catch(e){toast("Could not make the PDF. Check your connection.")}finally{b.disabled=false;b.textContent="Download PDF"}}
+/* orders */
+async function orders(){const{data}=await sb.from("orders").select("*").order("id",{ascending:false}).limit(150),all=data||[],l=flt==="all"?all:all.filter(o=>o.status===flt);
+$("#c").innerHTML=`<div class="chips">${["all",...ST].map(s=>`<button class="chip${s===flt?" on":""}" data-f="${s}">${s[0].toUpperCase()+s.slice(1)}</button>`).join("")}</div>`+(l.map(o=>`<div class="card oc"><div class="top"><b>${esc(o.no)}</b><span>${N(o.total)}</span></div><small>${fdt(o.created_at)}</small><span class="pill s-${o.status}">${o.status}</span><br>${esc(o.name)} · <a href="tel:${esc(o.phone)}">${esc(o.phone)}</a> · <a target="_blank" rel="noopener" href="https://wa.me/${wa(o.phone)}">WhatsApp</a><br><small>${o.mode==="pickup"?"Pickup":esc(o.address+", "+o.city+", "+o.state)}</small>
+<div class="items">${(o.items||[]).map(i=>i.q+"× "+esc(i.name)+(i.size?" ("+esc(i.size)+")":"")).join("<br>")}<br><small>Delivery ${N(o.fee)}</small>${o.note?"<br><i>"+esc(o.note)+"</i>":""}</div><select data-id="${o.id}" style="margin-bottom:0">${ST.map(s=>`<option${s===o.status?" selected":""}>${s}</option>`).join("")}</select></div>`).join("")||"<p class='mu'>Nothing here yet.</p>");
+$("#c").onclick=e=>{const f=e.target.closest("[data-f]");if(f){flt=f.dataset.f;orders()}};
 $("#c").onchange=async e=>{const s=e.target;if(!s.dataset.id)return;if(s.value==="paid"&&!confirm("Have you seen this credit in your bank app?"))return orders();
-const{error}=await sb.from("orders").update({status:s.value}).eq("id",s.dataset.id);toast(error?"Could not update":"Updated")}}
+const{error}=await sb.from("orders").update({status:s.value}).eq("id",s.dataset.id);toast(error?"Could not update":"Status updated");if(!error)orders()}}
+/* products */
 async function comp(f){const b=await createImageBitmap(f,{imageOrientation:"from-image"}),r=Math.min(1,1600/Math.max(b.width,b.height)),c=document.createElement("canvas");c.width=b.width*r;c.height=b.height*r;c.getContext("2d").drawImage(b,0,0,c.width,c.height);return new Promise(ok=>c.toBlob(ok,"image/webp",.85))}
 async function products(){const{data}=await sb.from("products").select("*").order("id",{ascending:false});const e=edit||{};
 $("#c").innerHTML=`<div class="card"><b>${e.id?"Edit product":"Add product"}</b><label>Name</label><input id="n" value="${esc(e.name)}"><label>Category</label><input id="ca" value="${esc(e.category)}" placeholder="Dresses, Bags, Shoes…"><label>Description</label><textarea id="d">${esc(e.description)}</textarea>
-<label>Price (₦)</label><input id="p" type="number" inputmode="numeric" value="${e.price??""}"><label>Sale price (₦, optional)</label><input id="sp" type="number" inputmode="numeric" value="${e.sale_price||""}"><label>Stock (empty = unlimited)</label><input id="st" type="number" inputmode="numeric" value="${e.stock??""}">
-<label>Sizes (comma separated, optional)</label><input id="sz" value="${esc((e.sizes||[]).join(", "))}"><label>Photo</label><input id="im" type="file" accept="image/*"><label><input id="pb" type="checkbox" style="width:auto;min-height:0"${e.published===false?"":" checked"}> Published (visible in the shop)</label>
-<button class="b" id="sv">${e.id?"Save changes":"Add product"}</button> ${e.id?`<button id="cx">Cancel</button>`:""}</div>`+(data||[]).map(p=>`<div class="card">${p.image_url?`<img class="t" src="${esc(p.image_url)}" alt="">`:""}<b>${esc(p.name)}</b> ${p.published?"":"<small>(hidden)</small>"}<br>${p.sale_price?`<s>${N(p.price)}</s> ${N(p.sale_price)}`:N(p.price)} · stock ${p.stock??"∞"}<br style="clear:both"><button data-e="${p.id}">Edit</button> <button data-h="${p.id}">${p.published?"Hide":"Publish"}</button> <button data-x="${p.id}">Delete</button></div>`).join("");
+<div class="two"><div><label>Price (₦)</label><input id="p" type="number" inputmode="numeric" value="${e.price??""}"></div><div><label>Sale price (₦)</label><input id="sp" type="number" inputmode="numeric" value="${e.sale_price||""}"></div></div><label>Stock (empty = unlimited)</label><input id="st" type="number" inputmode="numeric" value="${e.stock??""}">
+<label>Sizes (comma separated, optional)</label><input id="sz" value="${esc((e.sizes||[]).join(", "))}"><label>Photo</label><input id="im" type="file" accept="image/*"><label><input id="pb" type="checkbox" style="width:auto;min-height:0;margin-right:8px"${e.published===false?"":" checked"}>Show in the shop</label>
+<button class="b" id="sv">${e.id?"Save changes":"Add product"}</button> ${e.id?`<button id="cx">Cancel</button>`:""}</div>`+(data||[]).map(p=>`<div class="card pc">${p.image_url?`<img src="${esc(p.image_url)}" alt="">`:`<div class="ph"></div>`}<div><b style="font:600 19px 'Cormorant Garamond',serif">${esc(p.name)}</b> ${p.published?"":"<small>(hidden)</small>"}<br>${p.sale_price?`<s class="mu">${N(p.price)}</s> ${N(p.sale_price)}`:N(p.price)} · <small>stock ${p.stock??"∞"}</small><div class="bt"><button class="sm" data-e="${p.id}">Edit</button><button class="sm" data-h="${p.id}">${p.published?"Hide":"Publish"}</button><button class="sm" data-x="${p.id}">Delete</button></div></div></div>`).join("");
 const rows=data||[];$("#c").onclick=async ev=>{const t=ev.target;if(t.id==="cx"){edit=null;return products()}
 if(t.dataset.e){edit=rows.find(r=>r.id==t.dataset.e);products();scrollTo(0,0)}
 if(t.dataset.h){const r=rows.find(x=>x.id==t.dataset.h);await sb.from("products").update({published:!r.published}).eq("id",r.id);products()}
@@ -49,11 +130,12 @@ try{if(f){const b=await comp(f),path="p/"+Date.now()+".webp";const u=await sb.st
 const v=id=>$(id).value.trim(),num=id=>v(id)===""?null:+v(id);if(!v("#n")||num("#p")===null)throw Error("Name and price are required");
 const row={name:v("#n"),category:v("#ca"),description:v("#d"),price:num("#p"),sale_price:num("#sp"),stock:num("#st"),sizes:v("#sz")?v("#sz").split(",").map(s=>s.trim()).filter(Boolean):null,image_url:url,published:$("#pb").checked};
 const r=e.id?await sb.from("products").update(row).eq("id",e.id):await sb.from("products").insert(row);if(r.error)throw r.error;edit=null;toast("Saved");products()}catch(x){toast(x.message||"Could not save");t.disabled=false}}}}
+/* settings */
 async function settings(){const{data:s}=await sb.from("settings").select("*").eq("id",1).single();S=s||{};const z=(S.zones||[]).map(z=>z.s.join(", ")+" = "+z.fee).join("\n"),k=S.socials||{};
-$("#c").innerHTML=`<div class="card"><b>Payment details</b><br><small>Customers send money to this account. Double-check it.</small><label>Bank name</label><input id="bn" value="${esc(S.bank_name)}"><label>Account number</label><input id="an" inputmode="numeric" maxlength="10" value="${esc(S.acct_no)}"><label>Account name</label><input id="ac" value="${esc(S.acct_name)}"></div>
+$("#c").innerHTML=`<div class="card"><b>Payment details</b><small>Customers send money to this account. Double-check it.</small><label style="margin-top:10px">Bank name</label><input id="bn" value="${esc(S.bank_name)}"><label>Account number</label><input id="an" inputmode="numeric" maxlength="10" value="${esc(S.acct_no)}"><label>Account name</label><input id="ac" value="${esc(S.acct_name)}"></div>
 <div class="card"><b>Delivery</b><label>Pickup address (leave empty to switch off)</label><input id="pk" value="${esc(S.pickup)}"><label>Zones: states = fee (one zone per line)</label><textarea id="zn" rows="4">${esc(z)}</textarea><label>Fee for all other states (₦)</label><input id="of" type="number" value="${S.other_fee??5500}"><label>Free delivery above (₦)</label><input id="fo" type="number" value="${S.free_over??50000}"></div>
 <div class="card"><b>Contact and social</b><label>WhatsApp number</label><input id="wa" value="${esc(S.whatsapp)}"><label>Instagram link</label><input id="ig" value="${esc(k.Instagram)}"><label>TikTok link</label><input id="tk" value="${esc(k.TikTok)}"></div>
-<div class="card"><label><input id="lv" type="checkbox" style="width:auto;min-height:0"${S.live===false?"":" checked"}> Shop is open for orders</label></div><button class="b" id="ss" style="width:100%">Save settings</button>`;
+<div class="card"><label style="margin:0"><input id="lv" type="checkbox" style="width:auto;min-height:0;margin:0 8px 0 0"${S.live===false?"":" checked"}>Shop is open for orders</label></div><button class="b" id="ss" style="width:100%">Save settings</button>`;
 $("#ss").onclick=async()=>{const v=id=>$(id).value.trim(),zones=v("#zn").split("\n").map(l=>l.split("=")).filter(a=>a.length===2&&+a[1]>=0).map(a=>({s:a[0].split(",").map(x=>x.trim()).filter(Boolean),fee:+a[1]}));
 const bank=[v("#bn"),v("#an"),v("#ac")].join("|"),old=[S.bank_name,S.acct_no,S.acct_name].map(x=>x||"").join("|");
 if(bank!==old&&old!=="||"){const pw=prompt("You changed the payment details. Re-enter your password to confirm:");if(!pw)return;const{data:{user}}=await sb.auth.getUser();const r=await sb.auth.signInWithPassword({email:user.email,password:pw});if(r.error)return toast("Wrong password, nothing saved")}
