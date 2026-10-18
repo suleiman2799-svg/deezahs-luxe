@@ -136,6 +136,13 @@ footer a:hover{background-size:100% 1px}
 #soc a[href*="instagram"]{--ic:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.8'%3E%3Crect x='3' y='3' width='18' height='18' rx='5'/%3E%3Ccircle cx='12' cy='12' r='4.2'/%3E%3Ccircle cx='17.5' cy='6.5' r='.8' fill='black'/%3E%3C/svg%3E")}
 #soc a[href*="tiktok"]{--ic:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.9' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M14 3v11.5a3.5 3.5 0 1 1-3.5-3.5'/%3E%3Cpath d='M14 3c.4 2.6 2 4.2 5 4.4'/%3E%3C/svg%3E")}
 #soc a:hover{color:var(--pink)}
+.ord{border:1px solid var(--line);border-radius:16px;padding:14px;margin:12px 0}
+.ord .oh{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:2px}
+.ord ul{margin:8px 0;padding-left:18px;color:var(--mute);font-size:14px}
+.rm{margin:8px 0;padding:10px 12px;border-radius:12px;background:var(--blush);color:var(--ink);font-size:14px}
+.rm small{display:block;color:var(--rose);letter-spacing:.1em;text-transform:uppercase;font-size:11px;margin-bottom:2px}
+.bd{font-size:11px;letter-spacing:.08em;padding:3px 10px;border-radius:99px;background:var(--blush);color:var(--rose);white-space:nowrap}
+.bd.ok{background:rgba(60,160,110,.16);color:#2f8f5e}.bd.bad{background:rgba(130,130,130,.2);color:var(--mute)}
 </style></head><body>
 <svg width="0" height="0" style="position:absolute" aria-hidden="true"><symbol id="dl" viewBox="140 95 305 395"><g fill-rule="evenodd">
 <path d="M300.67 223.00C291.94 223.11 299.22 223.67 300.33 224.00C301.44 224.33 305.33 224.44 307.33 225.00C309.33 225.56 311.00 226.39 312.33 227.33C313.67 228.28 314.56 228.94 315.33 230.67C316.11 232.39 316.78 202.72 317.00 237.67C317.22 272.61 316.83 403.89 316.67 440.33C316.50 476.78 316.44 452.50 316.00 456.33C315.56 460.17 314.78 461.72 314.00 463.33C313.22 464.94 313.11 465.06 311.33 466.00C309.56 466.94 305.50 468.50 303.33 469.00C301.17 469.50 299.33 468.78 298.33 469.00C297.33 469.22 294.17 470.11 297.33 470.33C300.50 470.56 311.78 470.11 317.33 470.33C322.89 470.56 326.33 471.06 330.67 471.67C335.00 472.28 336.28 472.33 343.33 474.00C350.39 475.67 365.61 480.06 373.00 481.67C380.39 483.28 383.11 483.33 387.67 483.67C392.22 484.00 397.11 483.83 400.33 483.67C403.56 483.50 404.44 483.28 407.00 482.67C409.56 482.06 413.11 481.06 415.67 480.00C418.22 478.94 420.28 477.67 422.33 476.33C424.39 475.00 426.22 473.78 428.00 472.00C429.78 470.22 431.67 467.67 433.00 465.67C434.33 463.67 434.89 463.00 436.00 460.00C437.11 457.00 439.00 451.28 439.67 447.67C440.33 444.06 440.17 441.56 440.00 438.33C439.83 435.11 439.22 428.17 438.67 428.33C438.11 428.50 437.33 436.94 436.67 439.33C436.00 441.72 435.06 441.72 434.67 442.67C434.28 443.61 435.22 443.44 434.33 445.00C433.44 446.56 430.78 450.17 429.33 452.00C427.89 453.83 428.06 454.06 425.67 456.00C423.28 457.94 418.06 461.83 415.00 463.67C411.94 465.50 411.28 465.78 407.33 467.00C403.39 468.22 397.39 470.22 391.33 471.00C385.28 471.78 378.00 471.94 371.00 471.67C364.00 471.39 355.17 470.17 349.33 469.33C343.50 468.50 338.39 467.28 336.00 466.67C333.61 466.06 335.00 474.17 335.00 465.67C335.00 457.17 335.78 453.78 336.00 415.67C336.22 377.56 336.17 267.44 336.33 237.00C336.50 206.56 336.28 234.61 337.00 233.00C337.72 231.39 339.56 228.56 340.67 227.33C341.78 226.11 341.89 226.17 343.67 225.67C345.44 225.17 349.83 224.72 351.33 224.33C352.83 223.94 361.11 223.56 352.67 223.33C344.22 223.11 309.39 222.89 300.67 223.00Z"/>
@@ -179,7 +186,7 @@ footer a:hover{background-size:100% 1px}
 
 <header class="nav"><div class="wrap">
 <div class="row"><a class="brand" href="#top" style="color:inherit;text-decoration:none"><svg><use href="#dl"/></svg>Deezah’s Luxe</a>
-<button class="cartbtn" id="cartBtn" aria-label="Open cart"><svg viewBox="0 0 24 24"><path d="M5 8h14l-1 12H6L5 8Z"/><path d="M9 8a3 3 0 0 1 6 0"/></svg><b id="cnt" hidden>0</b></button></div>
+<div style="display:flex;gap:2px"><button class="cartbtn" id="hBtn" aria-label="My orders"><svg viewBox="0 0 24 24"><path d="M6 3h12v18l-3-2-3 2-3-2-3 2V3Z"/><path d="M9 8h6M9 12h6"/></svg></button><button class="cartbtn" id="cartBtn" aria-label="Open cart"><svg viewBox="0 0 24 24"><path d="M5 8h14l-1 12H6L5 8Z"/><path d="M9 8a3 3 0 0 1 6 0"/></svg><b id="cnt" hidden>0</b></button></div></div>
 <div class="search"><input id="q" type="search" placeholder="Search dresses, bags, shoes…" aria-label="Search products" autocomplete="off"></div>
 </div></header>
 
@@ -199,6 +206,7 @@ footer a:hover{background-size:100% 1px}
 
 <div class="ov" id="ovP"><div class="sheet" id="shP"></div></div>
 <div class="ov" id="ovC"><div class="sheet" id="shC"></div></div>
+<div class="ov" id="ovH"><div class="sheet" id="shH"></div></div>
 <div class="ov" id="ovK"><div class="sheet" id="shK"></div></div>
 <div class="toast" id="toast" role="status"></div>
 
@@ -272,7 +280,7 @@ g("nx").disabled=!(g("fn").value.trim().length>1&&/^(\+?234|0)\d{10}$/.test(g("f
 $("#f").addEventListener("input",upd);$("#f").addEventListener("change",upd);upd();
 $("#f").addEventListener("submit",async e=>{e.preventDefault();const pk=g("fm").value==="p",f=pk?0:fee(g("fs").value);
 const d={n:g("fn").value.trim(),p:g("fp").value.trim(),s:g("fs").value,c:g("fc").value.trim(),a:g("fa").value.trim()};if(g("fr").checked){me=d;sv("dl_me",d)}
-ord={d,pk,f,t:sub()+f,note:g("fo").value.trim(),items:cart.map(l=>({...l}))};g("nx").disabled=true;const{data,error}=await sb.rpc("place_order",{p:{name:d.n,phone:d.p,mode:pk?"pickup":"delivery",state:d.s,city:d.c,address:d.a,note:ord.note,items:cart.map(l=>({id:l.id,q:l.q,z:l.z}))}});if(error||!data){toast(/stock|unavailable/.test(error?.message||"")?"Sorry, an item just sold out. Please check your cart.":/closed/.test(error?.message||"")?"The shop is closed for orders right now.":"Something went wrong, please try again.");g("nx").disabled=false;return}ord.no=data.no;ord.t=data.total;ord.f=data.fee;pay()})}
+ord={d,pk,f,t:sub()+f,note:g("fo").value.trim(),items:cart.map(l=>({...l}))};g("nx").disabled=true;const{data,error}=await sb.rpc("place_order",{p:{name:d.n,phone:d.p,mode:pk?"pickup":"delivery",state:d.s,city:d.c,address:d.a,note:ord.note,items:cart.map(l=>({id:l.id,q:l.q,z:l.z}))}});if(error||!data){toast(/stock|unavailable/.test(error?.message||"")?"Sorry, an item just sold out. Please check your cart.":/closed/.test(error?.message||"")?"The shop is closed for orders right now.":"Something went wrong, please try again.");g("nx").disabled=false;return}ord.no=data.no;ord.t=data.total;ord.f=data.fee;hsave();pay()})}
 function pay(){const B=CFG.bank;const end=Date.now()+864e5;
 $("#shK").innerHTML=`<div class="sh-h"><h2>Payment</h2><button class="x" data-x aria-label="Close">×</button></div><div class="steps"><i class="on"></i><i class="on"></i></div>
 <div class="pay"><small style="letter-spacing:.2em;color:var(--mute);text-transform:uppercase;font-size:11px">Amount to pay</small><div class="am">${N(ord.t)}</div>
@@ -282,10 +290,27 @@ $("#shK").innerHTML=`<div class="sh-h"><h2>Payment</h2><button class="x" data-x 
 <button class="btn" style="width:100%;margin-top:10px" id="ip">I’ve paid</button>${CFG.preview?`<p class="note">Preview build: orders are not sent to the shop yet.</p>`:""}`;
 const tm=setInterval(()=>{const s=Math.max(0,(end-Date.now())/1e3|0),el=$("#tm");if(!el)return clearInterval(tm);el.textContent=[s/3600|0,s/60%60|0,s%60].map(v=>String(v).padStart(2,"0")).join(":")},1000);
 $("#cp").onclick=()=>{const t=B.no;(navigator.clipboard?navigator.clipboard.writeText(t):Promise.reject()).then(()=>toast("Account number copied")).catch(()=>{const r=document.createRange();r.selectNodeContents($("#an").firstChild);const s=getSelection();s.removeAllRanges();s.addRange(r);toast("Press and hold to copy")})};
-$("#ip").onclick=()=>{sb.rpc("report_paid",{n:ord.no,ph:ord.d.p});cart=[];sv("dl_cart",cart);cnt();clearInterval(tm);
+$("#ip").onclick=()=>{hmark(ord.no);sb.rpc("report_paid",{n:ord.no,ph:ord.d.p});cart=[];sv("dl_cart",cart);cnt();clearInterval(tm);
 $("#shK").innerHTML=`<div class="done"><div class="ck">✓</div><h2>Thank you, ${ord.d.n.split(" ")[0]}</h2><p style="color:var(--mute)">Order <b style="color:var(--rose)">${ord.no}</b> is awaiting confirmation. We’ll message you on ${ord.d.p} once your payment is confirmed.</p>
 <div class="div">✦</div><p style="color:var(--mute);font-size:14px">${ord.pk?"Pickup: "+CFG.pickup:"Delivering to "+ord.d.c+", "+ord.d.s}</p><button class="btn" style="margin-top:14px" data-x>Continue shopping</button></div>`}}
 $("#shK").onclick=e=>{if(e.target.closest("[data-x]"))close("#ovK")};
+/* order history */
+let H=ld("dl_orders",[]);
+const hsave=()=>{H.unshift({no:ord.no,ph:ord.d.p,t:ord.t,pk:ord.pk,d:Date.now(),st:"pending",it:ord.items.map(l=>{const p=P.find(x=>x.id===l.id);return{n:p?p.n:"Item",z:l.z,q:l.q}})});H=H.slice(0,30);sv("dl_orders",H)};
+const hmark=no=>{const o=H.find(x=>x.no===no);if(o&&o.st==="pending"){o.st="reported";sv("dl_orders",H)}};
+const SL=(s,l)=>{s=String(s||"").toLowerCase();if(!s)return l==="reported"?["Awaiting confirmation","wt"]:["Awaiting payment","wt"];
+if(/cancel|expire|reject/.test(s))return["Cancelled","bad"];if(/deliver|complete|collect/.test(s))return["Delivered","ok"];if(/ship|dispatch|transit/.test(s))return["On its way","ok"];if(/refund/.test(s))return["Refunded","bad"];if(/pack/.test(s))return["Packed","ok"];if(/ready/.test(s))return["Ready for pickup","ok"];
+if(/report|verif|review|confirmation/.test(s)||(/pend|new|unpaid|await/.test(s)&&l==="reported"))return["Awaiting confirmation","wt"];if(/confirm|paid|process|pack/.test(s))return["Payment confirmed","ok"];return["Awaiting payment","wt"]};
+function hUI(){$("#shH").innerHTML=`<div class="sh-h"><h2>My orders</h2><button class="x" data-x aria-label="Close">×</button></div>`+(H.length?H.map(o=>{const[l,c]=SL(o.sv,o.st);return `<div class="ord"><div class="oh"><b>${o.no}</b><span class="bd ${c}">${l}</span></div><small style="color:var(--mute)">${new Date(o.d).toLocaleDateString("en-NG",{day:"numeric",month:"short",year:"numeric"})} · ${o.pk?"Pickup":"Delivery"}</small><ul>${o.it.map(i=>`<li>${i.n}${i.z?" ("+i.z+")":""} × ${i.q}</li>`).join("")}</ul>${o.rm?`<div class="rm"><small>Note from the shop</small>${String(o.rm).replace(/[&<>"]/g,c=>"&#"+c.charCodeAt(0)+";")}</div>`:""}<div class="tot"><span>Total</span><span>${N(o.t)}</span></div></div>`}).join(""):`<div class="empty">No orders yet on this device.<br><br><button class="btn ghost" data-x>Start shopping</button></div>`)+`<div class="ord"><b>Find an earlier order</b><small style="display:block;color:var(--mute);margin:2px 0 8px">Not on this list? Enter your order number and the phone number you used.</small><input id="fno" placeholder="Order number, e.g. DL-1001" autocomplete="off"><input id="fph" type="tel" inputmode="tel" placeholder="Phone number"><button class="btn ghost" id="ffind" type="button" style="width:100%">Find order</button></div><p class="note">Orders you place on this device are added here automatically.</p>`}
+async function hSync(){const g={};H.forEach(o=>(g[o.ph]=g[o.ph]||[]).push(o.no));
+try{await Promise.all(Object.entries(g).map(async([ph,nos])=>{const{data,error}=await sb.rpc("my_orders",{nos,ph});if(error||!data)return;data.forEach(r=>{const o=H.find(x=>x.no===r.no);if(o){o.sv=r.status;o.rm=r.remark;if(r.total)o.t=r.total}})}));sv("dl_orders",H);hUI()}catch(e){}}
+$("#hBtn").onclick=()=>{hUI();open("#ovH");hSync()};
+$("#shH").onclick=async e=>{if(e.target.closest("[data-x]"))return close("#ovH");
+if(e.target.closest("#ffind")){const n=$("#fno").value.trim(),ph=$("#fph").value.trim();if(!n||!ph)return toast("Enter the order number and phone");
+const b=$("#ffind");b.disabled=true;const{data,error}=await sb.rpc("find_order",{n,ph});b.disabled=false;const r=data&&data[0];
+if(error||!r)return toast("No order found. Check the number and phone");
+if(!H.find(x=>x.no===r.no)){H.push({no:r.no,ph,t:r.total,pk:r.mode==="pickup",d:new Date(r.created_at).getTime(),st:"pending",sv:r.status,it:(r.items||[]).map(i=>({n:i.name,z:i.size,q:i.q}))});H.sort((a,b)=>b.d-a.d);sv("dl_orders",H)}
+hUI();toast("Order added")}};
 /* socials */
 $("#soc").innerHTML=Object.entries(CFG.socials).filter(([,u])=>u).map(([n,u])=>`<a href="${u}" target="_blank" rel="noopener noreferrer" style="margin:0 10px;font-size:13px">${n}</a>`).join("");
 async function load(){const[a,b]=await Promise.all([sb.from("products").select("*").eq("published",true).order("id",{ascending:false}),sb.from("settings").select("*").eq("id",1).single()]);
